@@ -9,12 +9,36 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "AnimationPlayer",
+"class": "AsePlayer",
+"language": "GDScript",
+"path": "res://addons/aseplayer/aseplayer.gd"
+}, {
+"base": "FSMState",
+"class": "EntityStateBase",
+"language": "GDScript",
+"path": "res://Scripts/entity_state_base.gd"
+}, {
+"base": "Node",
+"class": "FSM",
+"language": "GDScript",
+"path": "res://Scripts/fsm.gd"
+}, {
+"base": "Node",
+"class": "FSMState",
+"language": "GDScript",
+"path": "res://Scripts/fsm_state.gd"
+}, {
 "base": "Control",
 "class": "Joystick",
 "language": "GDScript",
 "path": "res://Joystick/Joystick.gd"
 } ]
 _global_script_class_icons={
+"AsePlayer": "",
+"EntityStateBase": "",
+"FSM": "",
+"FSMState": "",
 "Joystick": ""
 }
 
@@ -33,6 +57,10 @@ window/size/test_height=640
 window/handheld/orientation="portrait"
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/aseplayer/plugin.cfg" )
 
 [input_devices]
 
