@@ -50,12 +50,13 @@ onready var _original_position : Vector2 = _background.rect_global_position
 
 var _touch_index :int = -1
 
+# click event
+export (float, 0.01, 0.5) var click_duration = 0.1
+var touch_start_time = 0
+signal clicked(position)
 func _ready() -> void:
 	if (not OS.has_touchscreen_ui_hint() and visibility_mode == VisibilityMode.TOUCHSCREEN_ONLY) or joystick_mode == JoystickMode.DYNAMIC:
 		hide()
-
-func on_resized():
-	print(_background.rect_global_position)
 
 func _touch_started(event: InputEventScreenTouch) -> bool:
 	return event.pressed and _touch_index == -1
@@ -69,8 +70,8 @@ func _input(event: InputEvent) -> void:
 
 	if event is InputEventScreenTouch:
 		if _touch_started(event) and _is_inside_control_rect(event.position, self):
+			touch_start_time = OS.get_ticks_msec()
 			if (joystick_mode == JoystickMode.DYNAMIC or joystick_mode == JoystickMode.FOLLOWING):
-				show()
 				_center_control(_background, event.position)
 			if _is_inside_control_circle(event.position, _background):
 				_touch_index = event.index
@@ -78,6 +79,9 @@ func _input(event: InputEvent) -> void:
 				_update_joystick(event.position)
 
 		elif _touch_ended(event):
+			if OS.get_ticks_msec() - touch_start_time < click_duration * 1000 and output == Vector2.ZERO:
+
+				emit_signal("clicked", event.position)
 			_reset()
 
 	elif event is InputEventScreenDrag and _touch_index == event.index:
@@ -139,7 +143,7 @@ func _update_joystick(event_position: Vector2):
 	if vector.length() > dead_size:
 		if directions > 0:
 			vector = _directional_vector(vector, directions, deg2rad(symmetry_angle))
-
+		show()
 		if vector_mode == VectorMode.NORMALIZED:
 			output = vector.normalized()
 			_center_control(_handle, output * clamp_size + center)

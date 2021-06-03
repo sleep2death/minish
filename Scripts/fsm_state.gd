@@ -3,8 +3,11 @@ extends Node
 
 signal transitioned(to)
 
-func transition_to(name: String):
-	call_deferred("emit_signal", "transitioned", name)
+func transition_to(name: String, immediatly: bool = false):
+	if immediatly:
+		emit_signal("transitioned", name)
+	else:
+		call_deferred("emit_signal", "transitioned", name)
 
 func _enter():
 	pass

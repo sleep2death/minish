@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "Joystick",
 "language": "GDScript",
 "path": "res://Joystick/Joystick.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player/player.gd"
 } ]
 _global_script_class_icons={
 "AsePlayer": "",
 "EntityStateBase": "",
 "FSM": "",
 "FSMState": "",
-"Joystick": ""
+"Joystick": "",
+"Player": ""
 }
 
 [application]

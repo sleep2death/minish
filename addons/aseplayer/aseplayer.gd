@@ -14,7 +14,6 @@ func _ready():
 	for p in layers:
 		var node := get_node(p) as Sprite
 		layer_nodes.append(node)
-	print(layer_nodes)
 
 func on_frame_changed(_idx):
 	pass
@@ -31,6 +30,5 @@ func get_current_direction() -> String:
 
 func set_flipped(value):
 	flipped = value
-	print(layer_nodes)
 	for node in layer_nodes:
 		node.scale.x = -1 if flipped else 1

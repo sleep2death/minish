@@ -23,9 +23,9 @@ func on_transitioned(to):
 	current_state._enter()
 
 func on_global_event(name, args):
-    if current_state:
-        current_state._on_global_event(name, args)
+	if current_state:
+		current_state._on_global_event(name, args)
 
 func _physics_process(delta):
-    if current_state:
-        current_state._update(delta)
+	if current_state:
+		current_state._update(delta)
