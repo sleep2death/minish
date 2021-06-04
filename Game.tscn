@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/camera_pivot.gd" type="Script" id=1]
 [ext_resource path="res://Joystick/Joystick.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Fonts/m3x6.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Scripts/performance_monitor.gd" type="Script" id=4]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/Tiles/Interactives.tres" type="TileSet" id=6]
+[ext_resource path="res://TileSets/Interactives.tres" type="TileSet" id=6]
+[ext_resource path="res://Scripts/interacive_tilemap.gd" type="Script" id=7]
+[ext_resource path="res://Shaders/m_dropshadow_static.tres" type="Material" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 3 )
@@ -30,16 +32,18 @@ drag_margin_bottom = 0.15
 [node name="World" type="YSort" parent="."]
 
 [node name="Interactives" type="TileMap" parent="World"]
+material = ExtResource( 8 )
 tile_set = ExtResource( 6 )
 cell_size = Vector2( 16, 16 )
 cell_y_sort = true
 centered_textures = true
+collision_layer = 3
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 65539, 0, 0, 131076, 0, 0, 196611, 0, 0 )
+tile_data = PoolIntArray( 4, 0, 0, 65539, 0, 0, 65541, 1, 0, 131076, 0, 0, 196611, 0, 0, 196613, 1, 0, 262146, 1, 0, 262148, 1, 0, 327683, 1, 0 )
+script = ExtResource( 7 )
 
 [node name="Player" parent="World" instance=ExtResource( 5 )]
-collision_layer = 0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

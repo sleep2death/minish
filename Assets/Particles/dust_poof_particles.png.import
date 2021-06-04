@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grasslands_Cloud_2.png-d792f9d9f3a1d2183a488ae65b3dd58a.stex"
+path="res://.import/dust_poof_particles.png-f2e605952531aa8db0a23f0875157104.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tiles/grasslands_Cloud_2.png"
-dest_files=[ "res://.import/grasslands_Cloud_2.png-d792f9d9f3a1d2183a488ae65b3dd58a.stex" ]
+source_file="res://Assets/Particles/dust_poof_particles.png"
+dest_files=[ "res://.import/dust_poof_particles.png-f2e605952531aa8db0a23f0875157104.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -30,5 +30,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

@@ -4,7 +4,7 @@ extends KinematicBody2D
 var velocity := Vector2.ZERO
 var anim_direction_name = "none"
 
-export (int, 0, 300) var detection_range = 128
+export (int, 0, 300) var detection_range = 64
 onready var detection_range_squared = detection_range * detection_range
 onready var detection_shape := CircleShape2D.new()
 
@@ -14,8 +14,29 @@ var query := Physics2DShapeQueryParameters.new()
 export (NodePath) var interactives_map = "../Interactives"
 onready var interactives := get_node(interactives_map) as TileMap
 
+onready var hurt_box := $HurtBox as Area2D
+
+onready var hit_box := $HitBox as Area2D
+onready var hit_shape := hit_box.get_node("CollisionShape2D") as CollisionShape2D
+
+onready var stats := $Stats as Stats
+
 func _ready():
 	detection_shape.radius = detection_range
+	query.collide_with_areas = true
+
+func hit_interactives():
+	query.set_shape(hit_shape.shape)
+	query.transform = hit_shape.global_transform
+	query.collision_layer = hit_box.collision_mask
+
+	var res = physics.intersect_shape(query)
+	for col in res:
+		if col.collider is InteractiveTileMap:
+			col.collider.on_hit(col.metadata, stats)
+		elif col.collider is HurtBox:
+			col.collider.on_hit(stats)
+			pass
 
 func get_interactives() -> Array:
 	query.set_shape(detection_shape)

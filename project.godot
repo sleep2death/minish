@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/aseplayer/aseplayer.gd"
 }, {
+"base": "Node2D",
+"class": "DropShadow",
+"language": "GDScript",
+"path": "res://Scripts/drop_shadow.gd"
+}, {
 "base": "FSMState",
 "class": "EntityStateBase",
 "language": "GDScript",
@@ -29,6 +34,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/fsm_state.gd"
 }, {
+"base": "Area2D",
+"class": "HurtBox",
+"language": "GDScript",
+"path": "res://Scripts/hurt_box.gd"
+}, {
+"base": "TileMap",
+"class": "InteractiveTileMap",
+"language": "GDScript",
+"path": "res://Scripts/interacive_tilemap.gd"
+}, {
 "base": "Control",
 "class": "Joystick",
 "language": "GDScript",
@@ -38,14 +53,23 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://Player/player.gd"
+}, {
+"base": "Node",
+"class": "Stats",
+"language": "GDScript",
+"path": "res://Scripts/stats.gd"
 } ]
 _global_script_class_icons={
 "AsePlayer": "",
+"DropShadow": "",
 "EntityStateBase": "",
 "FSM": "",
 "FSMState": "",
+"HurtBox": "",
+"InteractiveTileMap": "",
 "Joystick": "",
-"Player": ""
+"Player": "",
+"Stats": ""
 }
 
 [application]
@@ -68,9 +92,23 @@ window/stretch/aspect="expand"
 
 enabled=PoolStringArray( "res://addons/aseplayer/plugin.cfg" )
 
+[importer_defaults]
+
+texture={
+"detect_3d": false,
+"flags/filter": false
+}
+
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true
+
+[layer_names]
+
+2d_physics/layer_1="world"
+2d_physics/layer_2="world_interactives"
+2d_physics/layer_3="enemy_hurt_box"
+2d_physics/layer_4="player_hurt_box"
 
 [physics]
 

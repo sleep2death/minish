@@ -1,6 +1,8 @@
 class_name EntityStateBase
 extends FSMState
 
+const HALF_PI = PI * 0.5
+
 onready var joystick := get_node("/root/Game/CanvasLayer/UI/Joystick") as Joystick
 
 export (NodePath) var body_node = "../.."
@@ -14,6 +16,7 @@ onready var hurt_box := get_node(hurt_box_node) as Area2D
 
 export (NodePath) var hit_box_node = "../../HitBox"
 onready var hit_box := get_node(hit_box_node) as Area2D
+onready var hit_shape := hit_box.get_node("CollisionShape2D") as CollisionShape2D
 
 export (NodePath) var ase_player_node = "../../AsePlayer"
 onready var ase_player := get_node(ase_player_node) as AsePlayer
@@ -56,6 +59,18 @@ func get_direction_name_from_player() -> String:
 	if DIRECTIONS.find(anim) > -1:
 		return anim
 	return "none"
+
+func get_direction_from_name(name: String) -> Vector2:
+	match name:
+		"left":
+			return Vector2.LEFT
+		"right":
+			return Vector2.RIGHT
+		"back":
+			return Vector2.UP
+		"front":
+			return Vector2.DOWN
+	return Vector2.ZERO
 
 func get_side_direction(name: String) -> String:
 	if name == "left" or name == "right":

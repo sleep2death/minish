@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grasslands_Cloud_4.png-cc955e5efb29e60bb3b2ac614f62c23c.stex"
+path="res://.import/grasslands_Cloud_1.png-17d6b966ef88c592c13ced4cc69c072f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tiles/grasslands_Cloud_4.png"
-dest_files=[ "res://.import/grasslands_Cloud_4.png-cc955e5efb29e60bb3b2ac614f62c23c.stex" ]
+source_file="res://Assets/Particles/grasslands_Cloud_1.png"
+dest_files=[ "res://.import/grasslands_Cloud_1.png-17d6b966ef88c592c13ced4cc69c072f.stex" ]
 
 [params]
 
