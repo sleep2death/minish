@@ -14,14 +14,14 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
 
-[sub_resource type="CircleShape2D" id=20]
+[sub_resource type="CircleShape2D" id=2]
 radius = 20.0
 
-[sub_resource type="CapsuleShape2D" id=19]
+[sub_resource type="CapsuleShape2D" id=3]
 radius = 6.0
 height = 12.0
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=4]
 length = 0.7
 loop = true
 tracks/0/type = "value"
@@ -193,7 +193,7 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=5]
 length = 0.3
 loop = true
 tracks/0/type = "value"
@@ -329,7 +329,7 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=6]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -474,7 +474,7 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=7]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -637,7 +637,7 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=8]
 length = 1.6
 loop = true
 tracks/0/type = "value"
@@ -890,7 +890,7 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=9]
 length = 0.7
 loop = true
 tracks/0/type = "value"
@@ -1062,7 +1062,7 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=10]
 length = 0.3
 loop = true
 tracks/0/type = "value"
@@ -1198,7 +1198,7 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=11]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -1343,7 +1343,7 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=12]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -1506,7 +1506,7 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=13]
 length = 0.7
 loop = true
 tracks/0/type = "value"
@@ -1678,7 +1678,7 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=14]
 length = 0.3
 loop = true
 tracks/0/type = "value"
@@ -1814,7 +1814,7 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=15]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -1959,7 +1959,7 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=16]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -2122,17 +2122,17 @@ tracks/8/keys = {
 } ]
 }
 
-[sub_resource type="AtlasTexture" id=15]
+[sub_resource type="AtlasTexture" id=17]
 atlas = ExtResource( 5 )
 region = Rect2( 185, 97, 24, 33 )
 margin = Rect2( 52, 48, 128, 128 )
 
-[sub_resource type="AtlasTexture" id=16]
+[sub_resource type="AtlasTexture" id=18]
 atlas = ExtResource( 5 )
 region = Rect2( 263, 0, 1, 1 )
 margin = Rect2( 0, 0, 128, 128 )
 
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=19]
 atlas = ExtResource( 5 )
 region = Rect2( 263, 0, 1, 1 )
 margin = Rect2( 0, 0, 128, 128 )
@@ -2155,7 +2155,7 @@ collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2( 0, 20 )
-shape = SubResource( 20 )
+shape = SubResource( 2 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 position = Vector2( 0, -10 )
@@ -2164,7 +2164,7 @@ collision_mask = 0
 script = ExtResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-shape = SubResource( 19 )
+shape = SubResource( 3 )
 
 [node name="FSM" type="Node" parent="."]
 script = ExtResource( 2 )
@@ -2172,6 +2172,10 @@ initial_state_node = NodePath("Move")
 
 [node name="Move" type="Node" parent="FSM"]
 script = ExtResource( 3 )
+body_node = NodePath("../..")
+foot_collision_node = NodePath("../../FootCollision")
+hurt_box_node = NodePath("../../HurtBox")
+hit_box_node = NodePath("../../HitBox")
 idle_animation_speed = 0.5
 
 [node name="Attack" type="Node" parent="FSM"]
@@ -2179,19 +2183,19 @@ script = ExtResource( 6 )
 attack_animation_speed = 1.75
 
 [node name="AsePlayer" type="AnimationPlayer" parent="."]
-anims/back_attack_dagger = SubResource( 2 )
-anims/back_hurt = SubResource( 3 )
-anims/back_idle = SubResource( 4 )
-anims/back_move = SubResource( 5 )
-anims/death = SubResource( 6 )
-anims/front_attack_dagger = SubResource( 7 )
-anims/front_hurt = SubResource( 8 )
-anims/front_idle = SubResource( 9 )
-anims/front_move = SubResource( 10 )
-anims/side_attack_dagger = SubResource( 11 )
-anims/side_hurt = SubResource( 12 )
-anims/side_idle = SubResource( 13 )
-anims/side_move = SubResource( 14 )
+anims/back_attack_dagger = SubResource( 4 )
+anims/back_hurt = SubResource( 5 )
+anims/back_idle = SubResource( 6 )
+anims/back_move = SubResource( 7 )
+anims/death = SubResource( 8 )
+anims/front_attack_dagger = SubResource( 9 )
+anims/front_hurt = SubResource( 10 )
+anims/front_idle = SubResource( 11 )
+anims/front_move = SubResource( 12 )
+anims/side_attack_dagger = SubResource( 13 )
+anims/side_hurt = SubResource( 14 )
+anims/side_idle = SubResource( 15 )
+anims/side_move = SubResource( 16 )
 script = ExtResource( 4 )
 config = "res://Assets/Animations/cadence.json"
 offset = Vector2( -64, -76 )
@@ -2202,16 +2206,16 @@ script = ExtResource( 10 )
 
 [node name="layer_body" type="Sprite" parent="."]
 material = ExtResource( 9 )
-texture = SubResource( 15 )
+texture = SubResource( 17 )
 centered = false
 offset = Vector2( -64, -76 )
 
 [node name="layer_weapon" type="Sprite" parent="."]
-texture = SubResource( 16 )
+texture = SubResource( 18 )
 centered = false
 offset = Vector2( -64, -76 )
 
 [node name="layer_fx" type="Sprite" parent="."]
-texture = SubResource( 17 )
+texture = SubResource( 19 )
 centered = false
 offset = Vector2( -64, -76 )

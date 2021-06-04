@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Agent",
+"language": "GDScript",
+"path": "res://Scripts/ai_agent.gd"
+}, {
 "base": "AnimationPlayer",
 "class": "AsePlayer",
 "language": "GDScript",
@@ -50,6 +55,11 @@ _global_script_classes=[ {
 "path": "res://Joystick/Joystick.gd"
 }, {
 "base": "KinematicBody2D",
+"class": "Peahat",
+"language": "GDScript",
+"path": "res://Peahat/Peahat.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Player/player.gd"
@@ -58,8 +68,19 @@ _global_script_classes=[ {
 "class": "Stats",
 "language": "GDScript",
 "path": "res://Scripts/stats.gd"
+}, {
+"base": "Area2D",
+"class": "TargetDetection",
+"language": "GDScript",
+"path": "res://Scripts/target_detection.gd"
+}, {
+"base": "Object",
+"class": "Utils",
+"language": "GDScript",
+"path": "res://Scripts/utils.gd"
 } ]
 _global_script_class_icons={
+"Agent": "",
 "AsePlayer": "",
 "DropShadow": "",
 "EntityStateBase": "",
@@ -68,8 +89,11 @@ _global_script_class_icons={
 "HurtBox": "",
 "InteractiveTileMap": "",
 "Joystick": "",
+"Peahat": "",
 "Player": "",
-"Stats": ""
+"Stats": "",
+"TargetDetection": "",
+"Utils": ""
 }
 
 [application]
@@ -109,6 +133,10 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_2="world_interactives"
 2d_physics/layer_3="enemy_hurt_box"
 2d_physics/layer_4="player_hurt_box"
+2d_physics/layer_5="enemy_hit_box"
+2d_physics/layer_6="enemy_hurt_box"
+2d_physics/layer_7="player"
+2d_physics/layer_8="enemy"
 
 [rendering]
 

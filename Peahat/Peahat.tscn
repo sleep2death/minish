@@ -1,0 +1,308 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://Peahat/Peahat.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Animations/peahat.png" type="Texture" id=2]
+[ext_resource path="res://addons/aseplayer/aseplayer.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/fsm.gd" type="Script" id=4]
+[ext_resource path="res://Peahat/state_ground.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/target_detection.gd" type="Script" id=6]
+[ext_resource path="res://Peahat/state_jump.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/drop_shadow.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/hurt_box.gd" type="Script" id=9]
+[ext_resource path="res://Peahat/state_fly.gd" type="Script" id=10]
+[ext_resource path="res://Assets/Animations/peahat_top.png" type="Texture" id=11]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id=3]
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 96.0
+
+[sub_resource type="Animation" id=5]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 84, 33, 32, 24 ), Rect2( 62, 57, 30, 24 ), Rect2( 0, 38, 31, 24 ), Rect2( 31, 38, 31, 24 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 48, 48, 128, 128 ), Rect2( 49, 48, 128, 128 ), Rect2( 48, 48, 128, 128 ), Rect2( 48, 48, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 18 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 19 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 20 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 21 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 101, 81, 22, 20 ), Rect2( 62, 35, 21, 22 ), Rect2( 61, 81, 20, 23 ), Rect2( 92, 57, 20, 24 ), Rect2( 0, 62, 20, 24 ), Rect2( 20, 62, 20, 24 ), Rect2( 81, 81, 20, 23 ), Rect2( 40, 62, 21, 22 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 53, 68, 128, 128 ), Rect2( 53, 66, 128, 128 ), Rect2( 54, 65, 128, 128 ), Rect2( 54, 64, 128, 128 ), Rect2( 54, 64, 128, 128 ), Rect2( 54, 64, 128, 128 ), Rect2( 54, 65, 128, 128 ), Rect2( 54, 66, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 0 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 1 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 2 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 3 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 4 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 5 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 6 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 7 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=7]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 86, 24, 18 ), Rect2( 30, 0, 26, 38 ), Rect2( 56, 0, 28, 35 ), Rect2( 56, 0, 28, 35 ), Rect2( 56, 0, 28, 35 ), Rect2( 56, 0, 28, 35 ), Rect2( 84, 0, 28, 33 ), Rect2( 84, 0, 28, 33 ), Rect2( 0, 0, 30, 33 ), Rect2( 0, 0, 30, 33 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 52, 69, 128, 128 ), Rect2( 51, 47, 128, 128 ), Rect2( 50, 44, 128, 128 ), Rect2( 50, 43, 128, 128 ), Rect2( 50, 42, 128, 128 ), Rect2( 50, 41, 128, 128 ), Rect2( 50, 41, 128, 128 ), Rect2( 50, 42, 128, 128 ), Rect2( 49, 41, 128, 128 ), Rect2( 49, 42, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 8 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 9 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 10 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 11 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 12 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 13 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 14 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 15 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 16 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 17 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 62, 35, 21, 22 )
+margin = Rect2( 53, 66, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 36, 51 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 11 )
+region = Rect2( 36, 0, 36, 51 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 11 )
+region = Rect2( 72, 0, 36, 51 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 11 )
+region = Rect2( 108, 0, 36, 51 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 11 )
+region = Rect2( 144, 0, 36, 51 )
+
+[sub_resource type="SpriteFrames" id=14]
+animations = [ {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
+"loop": true,
+"name": "default",
+"speed": 8.0
+} ]
+
+[node name="Peahat" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource( 1 )
+
+[node name="FootCollision" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="FSM" type="Node" parent="."]
+script = ExtResource( 4 )
+initial_state_node = NodePath("Ground")
+
+[node name="Ground" type="Node" parent="FSM"]
+script = ExtResource( 5 )
+
+[node name="Jump" type="Node" parent="FSM"]
+script = ExtResource( 7 )
+jump_anim_speed = 2.0
+
+[node name="Fly" type="Node" parent="FSM"]
+script = ExtResource( 10 )
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource( 2 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource( 9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource( 3 )
+
+[node name="TargetDetection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TargetDetection"]
+shape = SubResource( 4 )
+
+[node name="AsePlayer" type="AnimationPlayer" parent="."]
+anims/fly = SubResource( 5 )
+anims/ground = SubResource( 6 )
+anims/jump = SubResource( 7 )
+script = ExtResource( 3 )
+config = "res://Assets/Animations/peahat.json"
+offset = Vector2( -64, -80 )
+layers = [ NodePath("../layer_body") ]
+
+[node name="layer_shadow" type="Node2D" parent="."]
+script = ExtResource( 8 )
+
+[node name="layer_body" type="Sprite" parent="."]
+texture = SubResource( 8 )
+centered = false
+offset = Vector2( -64, -80 )
+
+[node name="animated_top" type="AnimatedSprite" parent="."]
+visible = false
+frames = SubResource( 14 )
+frame = 4
+playing = true
+offset = Vector2( 0, -20 )

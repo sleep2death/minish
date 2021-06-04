@@ -8,19 +8,19 @@ export (int, 100, 600, 1) var acceleration = 500
 export (int, 100, 600, 1) var friction = 500
 
 func _update(delta):
-	var input := joystick.output.normalized()
+	var input := player.joystick.output.normalized()
 	var vel = input * max_speed
 
 	if input.length_squared() > 0:
-		player.anim_direction_name = get_direction_name(input)
-		play_anim("move", player.anim_direction_name, move_animation_speed)
+		player.anim_direction_name = player.ase.get_direction_name(input)
+		player.ase.play_anim("move", player.anim_direction_name, move_animation_speed)
 
 		player.velocity = player.velocity.move_toward(vel, acceleration * delta)
 	else:
 		if not player.anim_direction_name == "none":
-			play_anim("idle", player.anim_direction_name, idle_animation_speed)
+			player.ase.play_anim("idle", player.anim_direction_name, idle_animation_speed)
 		else:
-			play_anim("idle", "front", idle_animation_speed)
+			player.ase.play_anim("idle", "front", idle_animation_speed)
 			player.anim_direction_name = "front"
 
 		player.velocity = player.velocity.move_toward(vel, friction * delta)

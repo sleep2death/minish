@@ -119,7 +119,6 @@ func parse_animation(config):
 				anim.track_insert_key(l_idx + 1, duration, Rect2(f.spriteSourceSize.x, f.spriteSourceSize.y, f.sourceSize.w, f.sourceSize.h))
 				anim.track_insert_key(l_idx + 2, duration, {"method": "on_frame_changed", "args": [i]})
 				duration += f.duration / 1000
-				# prints(f.frame, f.sourceSize)
 
 			l_idx += 3
 			anim.length = duration

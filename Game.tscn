@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/camera_pivot.gd" type="Script" id=1]
 [ext_resource path="res://Joystick/Joystick.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://TileSets/Interactives.tres" type="TileSet" id=6]
 [ext_resource path="res://Scripts/interacive_tilemap.gd" type="Script" id=7]
 [ext_resource path="res://Shaders/m_dropshadow_static.tres" type="Material" id=8]
+[ext_resource path="res://Peahat/Peahat.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 3 )
@@ -35,15 +36,20 @@ drag_margin_bottom = 0.15
 material = ExtResource( 8 )
 tile_set = ExtResource( 6 )
 cell_size = Vector2( 16, 16 )
+cell_tile_origin = 1
 cell_y_sort = true
-centered_textures = true
 collision_layer = 3
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 4, 0, 0, 65539, 0, 0, 65541, 1, 0, 131076, 0, 0, 196611, 0, 0, 196613, 1, 0, 262146, 1, 0, 262148, 1, 0, 327683, 1, 0 )
+tile_data = PoolIntArray( 65540, 0, 0, 131075, 1, 0, 131077, 1, 0, 196612, 1, 0 )
 script = ExtResource( 7 )
 
 [node name="Player" parent="World" instance=ExtResource( 5 )]
+collision_layer = 64
+joystick_node = NodePath("../../CanvasLayer/UI/Joystick")
+
+[node name="Peahat" parent="World" instance=ExtResource( 9 )]
+position = Vector2( -49.2789, 47.2185 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -14,6 +14,9 @@ var query := Physics2DShapeQueryParameters.new()
 export (NodePath) var interactives_map = "../Interactives"
 onready var interactives := get_node(interactives_map) as TileMap
 
+export (NodePath) var joystick_node = "/root/Game/CanvasLayer/UI/Joystick"
+onready var joystick := get_node(joystick_node) as Joystick
+
 onready var hurt_box := $HurtBox as Area2D
 
 onready var hit_box := $HitBox as Area2D
@@ -21,6 +24,8 @@ onready var hit_shape := hit_box.get_node("CollisionShape2D") as CollisionShape2
 
 onready var stats := $Stats as Stats
 onready var fsm := $FSM as FSM
+
+onready var ase := $AsePlayer as AsePlayer
 
 func _ready():
 	detection_shape.radius = detection_range
@@ -49,17 +54,19 @@ func get_interactives() -> Array:
 func get_nearest_interactive_pos(targets: Array) -> Vector2:
 	var nearest = detection_range_squared
 	var nearest_pos = Vector2.ZERO
+
 	for t in targets:
 		var tm := t.collider as TileMap
 		var lp = tm.map_to_world(t.metadata)
 		var gp = tm.to_global(lp)
+		# prints("global_pos", gp, "local_pos", lp)
 		var dist := global_position.distance_squared_to(gp)
 
 		if dist < nearest:
 			nearest = dist
 			nearest_pos = gp
+	# prints("nearest", nearest_pos)
 	return nearest_pos
 
 func on_joystick_clicked(position):
-	print("clicked 0")
 	fsm.on_global_event("joystick_clicked", position)
