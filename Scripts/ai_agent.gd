@@ -14,6 +14,10 @@ var dangers = []
 var chosen_dir = Vector2.ZERO
 
 func _ready():
+	ray_directions.resize(num_rays)
+	interests.resize(num_rays)
+	dangers.resize(num_rays)
+
 	# add reflection
 	for i in num_rays:
 		interests[i] = 0

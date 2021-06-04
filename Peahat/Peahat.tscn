@@ -207,8 +207,8 @@ tracks/2/keys = {
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 2 )
-region = Rect2( 62, 35, 21, 22 )
-margin = Rect2( 53, 66, 128, 128 )
+region = Rect2( 61, 81, 20, 23 )
+margin = Rect2( 54, 65, 128, 128 )
 
 [sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 11 )
