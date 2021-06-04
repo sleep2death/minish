@@ -7,11 +7,6 @@ export (int, 10, 600, 1) var max_speed = 120
 export (int, 100, 600, 1) var acceleration = 500
 export (int, 100, 600, 1) var friction = 500
 
-func _enter():
-	assert(joystick.connect("clicked", self, "on_clicked") == OK)
-
-func _exit():
-	joystick.disconnect("clicked", self, "on_clicked")
 func _update(delta):
 	var input := joystick.output.normalized()
 	var vel = input * max_speed
@@ -32,5 +27,6 @@ func _update(delta):
 
 	player.velocity = player.move_and_slide(player.velocity)
 
-func on_clicked(_pos: Vector2):
-	transition_to("Attack", true)
+func _on_global_event(name, _args):
+	if name == "joystick_clicked":
+		transition_to("Attack", true)

@@ -99,3 +99,5 @@ grow_vertical = 2
 rect_pivot_offset = Vector2( 180, 128 )
 joystick_mode = 1
 dead_zone = 0.2
+
+[connection signal="joystick_clicked" from="CanvasLayer/UI/Joystick" to="World/Player" method="on_joystick_clicked"]

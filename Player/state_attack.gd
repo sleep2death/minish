@@ -12,15 +12,17 @@ var frame_count = 0
 
 func _enter():
 	var target_pos := find_target()
-	if target_pos == Vector2.ZERO:
-		assert(not player.anim_direction_name == "none", "animation has no direction: %s" % ase_player.current_animation)
+	if target_pos == Vector2.ZERO and player.anim_direction_name == "none":
+		return push_error("animation has no direction: %s" % ase_player.current_animation)
 	else:
 		player.anim_direction_name = get_direction_name((target_pos - player.global_position).normalized())
 
+	prints("attack", player.anim_direction_name)
+	if ase_player.connect("animation_finished", self, "on_animation_finished") != 0:
+		return push_error("can't connect to ase_player")
+
 	play_anim("attack_dagger", player.anim_direction_name, attack_animation_speed, false)
 	hit_box.rotation = get_direction_from_name(player.anim_direction_name).angle() - HALF_PI
-
-	assert(ase_player.connect("animation_finished", self, "on_animation_finished") == OK)
 
 func _exit():
 	frame_count = 0
@@ -41,4 +43,4 @@ func find_target() -> Vector2:
 	return nearest
 
 func on_animation_finished(_name: String):
-	transition_to("Move")
+	transition_to("Move", false)

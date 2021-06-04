@@ -35,7 +35,7 @@ func update_property():
 		base_dir = new_value.get_base_dir()
 	else:
 		btn.text = "SELECT ASE JSON"
-	
+
 	updating = false
 
 func on_file_selected(file_path: String):
@@ -57,15 +57,15 @@ func on_file_selected(file_path: String):
 			parse_animation(res.result)
 		else:
 			push_error("can\'t read json file: %s" % res.error)
-			
+
 	emit_changed(get_edited_property(), file_path)
-	
+
 
 func parse_animation(config):
 	var tags = config.meta.frameTags
 	var layers = config.meta.layers
 	var image_path = base_dir + "/" + config.meta.image
-	
+
 	var arr = []
 	for layer in layers:
 		var l_name = "layer_" + layer.name
@@ -85,9 +85,9 @@ func parse_animation(config):
 
 		root.add_child(sprite)
 		sprite.owner = root
-		
+
 		arr.append(NodePath("../"+l_name))
-		
+
 	emit_changed("layers", arr)
 
 	for tag in tags:
@@ -126,4 +126,5 @@ func parse_animation(config):
 
 		# add animation to the player
 		anim.loop = true
-		assert(player.add_animation(tag.name, anim) == OK, "add animation FAILED: " + tag.name)
+		if player.add_animation(tag.name, anim) != 0:
+			push_error("add animation FAILED: " + tag.name)

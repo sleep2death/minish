@@ -20,6 +20,7 @@ onready var hit_box := $HitBox as Area2D
 onready var hit_shape := hit_box.get_node("CollisionShape2D") as CollisionShape2D
 
 onready var stats := $Stats as Stats
+onready var fsm := $FSM as FSM
 
 func _ready():
 	detection_shape.radius = detection_range
@@ -59,3 +60,6 @@ func get_nearest_interactive_pos(targets: Array) -> Vector2:
 			nearest_pos = gp
 	return nearest_pos
 
+func on_joystick_clicked(position):
+	print("clicked 0")
+	fsm.on_global_event("joystick_clicked", position)
