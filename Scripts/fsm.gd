@@ -8,11 +8,13 @@ var current_state: FSMState
 func _ready():
 	call_deferred("on_transitioned", initial_state_node)
 
-func on_transitioned(to):
+func on_transitioned(to, _args = null):
 	var next := get_node_or_null(to) as FSMState
 	if not next:
 		return push_error("next state not found: " + to)
-
+	
+	print("on transitioned to: " + to)
+		
 	if current_state != null:
 		current_state._exit()
 		current_state.disconnect("transitioned", self, "on_transitioned")
@@ -20,7 +22,7 @@ func on_transitioned(to):
 	if next.connect("transitioned", self, "on_transitioned") != 0:
 		return push_error("next state can't connect: " + to)
 
-	next._enter()
+	next._enter(_args)
 	current_state = next
 
 func on_global_event(name, args):

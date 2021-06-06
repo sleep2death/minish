@@ -2,10 +2,10 @@
 
 [ext_resource path="res://Player/player.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/fsm.gd" type="Script" id=2]
-[ext_resource path="res://Player/state_move.gd" type="Script" id=3]
+[ext_resource path="res://Player/state_moving.gd" type="Script" id=3]
 [ext_resource path="res://addons/aseplayer/aseplayer.gd" type="Script" id=4]
 [ext_resource path="res://Assets/Animations/cadence.png" type="Texture" id=5]
-[ext_resource path="res://Player/state_attack.gd" type="Script" id=6]
+[ext_resource path="res://Player/state_attacking.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/hurt_box.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/stats.gd" type="Script" id=8]
 [ext_resource path="res://Shaders/m_dropshadow_animated.tres" type="Material" id=9]
@@ -15,7 +15,7 @@
 radius = 8.0
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 20.0
+radius = 24.0
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 6.0
@@ -2168,19 +2168,16 @@ shape = SubResource( 3 )
 
 [node name="FSM" type="Node" parent="."]
 script = ExtResource( 2 )
-initial_state_node = NodePath("Move")
+initial_state_node = NodePath("Moving")
 
-[node name="Move" type="Node" parent="FSM"]
+[node name="Moving" type="Node" parent="FSM"]
 script = ExtResource( 3 )
-body_node = NodePath("../..")
-foot_collision_node = NodePath("../../FootCollision")
-hurt_box_node = NodePath("../../HurtBox")
-hit_box_node = NodePath("../../HitBox")
 idle_animation_speed = 0.5
 
-[node name="Attack" type="Node" parent="FSM"]
+[node name="Attacking" type="Node" parent="FSM"]
 script = ExtResource( 6 )
 attack_animation_speed = 1.75
+friction = 200
 
 [node name="AsePlayer" type="AnimationPlayer" parent="."]
 anims/back_attack_dagger = SubResource( 4 )

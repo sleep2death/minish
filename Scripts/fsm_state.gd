@@ -3,13 +3,13 @@ extends Node
 
 signal transitioned(to)
 
-func transition_to(name: String, immediatly: bool = true):
+func transition_to(name: String, args = null, immediatly: bool = true):
 	if immediatly:
-		emit_signal("transitioned", name)
+		emit_signal("transitioned", name, args)
 	else:
-		call_deferred("emit_signal", "transitioned", name)
+		call_deferred("emit_signal", "transitioned", name, args)
 
-func _enter():
+func _enter(_args):
 	pass
 
 func _update(_delta):

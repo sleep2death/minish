@@ -9,6 +9,8 @@ onready var hp: int = max_hp setget set_hp
 signal dying()
 signal health_changed(hp)
 
+var is_dead: bool = false setget _block_set, _is_dead
+
 func _ready():
 	emit_signal("health_changed", hp)
 
@@ -20,7 +22,12 @@ func set_hp(value):
 
 	if hp == 0:
 		emit_signal("dying")
+func _is_dead() -> bool:
+	return hp <= 0
 
 func take_damage(from: Stats) -> int:
 	self.hp -= from.damage
 	return hp
+
+func _block_set(_value):
+	push_error('can not set is_dead, read ONLY')

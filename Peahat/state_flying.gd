@@ -11,7 +11,7 @@ onready var animated_top := get_node("../../animated_top") as AnimatedSprite
 export (int, 0, 480, 1) var ground_count = 120
 var idle_count = 0
 
-func _enter():
+func _enter(_args):
 	entity.ase.play_anim("fly", "", fly_anim_speed)
 
 	entity.hit_box.position.y = -20
@@ -32,8 +32,7 @@ func _update(delta):
 	if not target:
 		idle_count += 1
 		if idle_count > ground_count:
-			entity.jump_up = false
-			transition_to("Jump")
+			transition_to("Jumping", true)
 
 	entity.start()
 	if target:
@@ -45,8 +44,11 @@ func _update(delta):
 	entity.velocity = entity.velocity.move_toward(dir * fly_speed, delta * acceleration)
 	entity.velocity = entity.move_and_slide(entity.velocity)
 
-
 func on_targets_changed(targets):
 	if targets.size() > 0:
 		pass
 
+func _on_global_event(name, _args):
+	if name == "on_hurt":
+		var from := _args as Stats
+		transition_to("Hurting", from)

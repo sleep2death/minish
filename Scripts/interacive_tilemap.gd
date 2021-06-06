@@ -1,8 +1,8 @@
 extends TileMap
 class_name InteractiveTileMap
 
-var bush_particles = preload("res://Particles/BushParticles.tscn")
-var lostwoods_bush_particles = preload("res://Particles/LostWoodsBushParticles.tscn")
+var bush_particles = preload("res://VFx/BushParticles.tscn")
+var lostwoods_bush_particles = preload("res://VFx/LostWoodsBushParticles.tscn")
 
 func on_hit(pos: Vector2, _stats: Stats):
 	var lp = map_to_world(pos)

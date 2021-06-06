@@ -1,6 +1,7 @@
 extends Area2D
 class_name HurtBox
 
-func on_hurt(stats):
-	print("get hit from: ", stats.owner)
-	pass
+signal hurt(stats)
+func on_hit(stats):
+	# print("get hit from: ", stats.owner.name)
+	emit_signal("hurt", stats)

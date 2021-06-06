@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/ai_agent.gd"
 }, {
+"base": "AnimatedSprite",
+"class": "AnimatedSpriteAutoFree",
+"language": "GDScript",
+"path": "res://Scripts/animation_auto_free.gd"
+}, {
 "base": "AnimationPlayer",
 "class": "AsePlayer",
 "language": "GDScript",
@@ -78,9 +83,15 @@ _global_script_classes=[ {
 "class": "Utils",
 "language": "GDScript",
 "path": "res://Scripts/utils.gd"
+}, {
+"base": "Position2D",
+"class": "VisualCamera",
+"language": "GDScript",
+"path": "res://Scripts/camera_pivot.gd"
 } ]
 _global_script_class_icons={
 "Agent": "",
+"AnimatedSpriteAutoFree": "",
 "AsePlayer": "",
 "DropShadow": "",
 "EntityStateBase": "",
@@ -93,7 +104,8 @@ _global_script_class_icons={
 "Player": "",
 "Stats": "",
 "TargetDetection": "",
-"Utils": ""
+"Utils": "",
+"VisualCamera": ""
 }
 
 [application]

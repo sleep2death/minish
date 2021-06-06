@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/camera_pivot.gd" type="Script" id=1]
 [ext_resource path="res://Joystick/Joystick.tscn" type="PackedScene" id=2]
@@ -10,19 +10,22 @@
 [ext_resource path="res://Shaders/m_dropshadow_static.tres" type="Material" id=8]
 [ext_resource path="res://Peahat/Peahat.tscn" type="PackedScene" id=9]
 
+[sub_resource type="OpenSimplexNoise" id=2]
+
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 3 )
 
 [node name="Game" type="Node2D"]
 
-[node name="Position2D" type="Position2D" parent="."]
+[node name="VCam" type="Position2D" parent="."]
 script = ExtResource( 1 )
 __meta__ = {
 "_gizmo_extents_": 0.1
 }
-offset_scale = 0.0
+camera_node = NodePath("../Position2D/Camera")
+noise = SubResource( 2 )
 
-[node name="Camera" type="Camera2D" parent="Position2D"]
+[node name="Camera" type="Camera2D" parent="VCam"]
 current = true
 process_mode = 0
 drag_margin_left = 0.15
@@ -44,8 +47,12 @@ format = 1
 tile_data = PoolIntArray( 65540, 0, 0, 131075, 1, 0, 131077, 1, 0, 196612, 1, 0 )
 script = ExtResource( 7 )
 
-[node name="Player" parent="World" instance=ExtResource( 5 )]
+[node name="Player" parent="World" groups=[
+"camera_shaker",
+"frame_freezer",
+] instance=ExtResource( 5 )]
 collision_layer = 64
+camera_node = NodePath("../../VCam")
 joystick_node = NodePath("../../CanvasLayer/UI/Joystick")
 
 [node name="Peahat" parent="World" instance=ExtResource( 9 )]

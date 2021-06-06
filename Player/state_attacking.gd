@@ -10,7 +10,7 @@ export (int, 0, 10) var hit_start_frame = 4
 export (int, 0, 10) var hit_end_frame = 8
 var frame_count = 0
 
-func _enter():
+func _enter(_args):
 	var target_pos := find_target()
 	if target_pos == Vector2.ZERO and player.anim_direction_name == "none":
 		return push_error("animation has no direction: %s" % player.ase.current_animation)
@@ -35,7 +35,10 @@ func _update(delta):
 
 	# hit duration
 	if frame_count >= hit_start_frame && frame_count < hit_end_frame:
-		player.hit_interactives()
+		if player.hit_interactives():
+			player.freeze_frame(30)
+			player.shake_camera(0.1)
+			
 	frame_count += 1
 
 func find_target() -> Vector2:
@@ -43,4 +46,4 @@ func find_target() -> Vector2:
 	return player.get_nearest_interactive_pos(res)
 
 func on_animation_finished(_name: String):
-	transition_to("Move", false)
+	transition_to("Moving", null, false)

@@ -3,7 +3,7 @@ extends FSMState
 export (float, 0.1, 3.0) var ground_anim_speed = 1.0
 onready var entity := get_node("../..") as Peahat
 
-func _enter():
+func _enter(_args):
 	entity.ase.play_anim("ground", "", ground_anim_speed)
 
 	entity.hit_box.position.y = 0
@@ -17,6 +17,5 @@ func _exit():
 
 func on_targets_changed(targets):
 	if targets.size() > 0:
-		entity.jump_up = true
-		transition_to("Jump")
+		transition_to("Jumping", false)
 
