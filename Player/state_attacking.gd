@@ -5,6 +5,9 @@ var direction_name = "none"
 export (float, 0.1, 3.0, 0.01) var attack_animation_speed = 2.0
 export (int, 100, 600, 1) var friction = 500
 
+export (float, 0.01, 1.0) var camera_shake_amount = 0.3
+export (float, 0.001, 0.5) var frame_freeze_duration = 0.01
+
 # actually frame, not animation frame
 export (int, 0, 10) var hit_start_frame = 4
 export (int, 0, 10) var hit_end_frame = 8
@@ -36,8 +39,8 @@ func _update(delta):
 	# hit duration
 	if frame_count >= hit_start_frame && frame_count < hit_end_frame:
 		if player.hit_interactives():
-			player.freeze_frame(30)
-			player.shake_camera(0.1)
+			player.freeze_frame(frame_freeze_duration)
+			player.shake_camera(camera_shake_amount)
 			
 	frame_count += 1
 
@@ -47,3 +50,7 @@ func find_target() -> Vector2:
 
 func on_animation_finished(_name: String):
 	transition_to("Moving", null, false)
+
+func _on_global_event(name, _args):
+	if name == "on_hurt":
+		transition_to("Hurting", _args)

@@ -30,3 +30,5 @@ func _update(delta):
 func _on_global_event(name, _args):
 	if name == "joystick_clicked":
 		transition_to("Attacking", true)
+	elif name == "on_hurt":
+		transition_to("Hurting", _args)	

@@ -76,12 +76,17 @@ func parse_animation(config):
 		var sprite := Sprite.new()
 		sprite.name = l_name
 
-		var texture := load(image_path)
-
+		var texture := load(image_path) as Texture
+		
 		sprite.texture = AtlasTexture.new()
 		sprite.texture.atlas = texture
+		sprite.texture.atlas.resource_local_to_scene = true
+		print("local resource: ", sprite.texture.atlas.resource_local_to_scene)
+		
 		sprite.centered = false
 		sprite.offset = player.offset
+		
+		sprite.material = load("res://addons/aseplayer/default_material.tres")
 
 		root.add_child(sprite)
 		sprite.owner = root

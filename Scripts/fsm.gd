@@ -13,7 +13,7 @@ func on_transitioned(to, _args = null):
 	if not next:
 		return push_error("next state not found: " + to)
 	
-	print("on transitioned to: " + to)
+	# print("on transitioned to: " + to)
 		
 	if current_state != null:
 		current_state._exit()

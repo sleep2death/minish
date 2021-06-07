@@ -2,7 +2,7 @@ extends FSMState
 
 var enemy_death := preload("res://VFx/GlobalEnemyDeath.tscn")
 
-onready var entity := get_node("../..") as Peahat
+onready var entity := get_node("../..") as Lizafos
 
 export (int, 0, 600) var knock_back_speed = 80
 export (int, 0, 600) var friction = 40

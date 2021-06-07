@@ -1,0 +1,1425 @@
+[gd_scene load_steps=35 format=2]
+
+[ext_resource path="res://Lizafos/Lizafos.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Animations/lizafos.png" type="Texture" id=2]
+[ext_resource path="res://addons/aseplayer/aseplayer.gd" type="Script" id=3]
+[ext_resource path="res://addons/aseplayer/default_material.tres" type="Material" id=4]
+[ext_resource path="res://Scripts/drop_shadow.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/fsm.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/hurt_box.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/stats.gd" type="Script" id=8]
+[ext_resource path="res://Lizafos/state_idle.gd" type="Script" id=9]
+[ext_resource path="res://Scripts/target_detection.gd" type="Script" id=10]
+[ext_resource path="res://Lizafos/state_grab.gd" type="Script" id=11]
+[ext_resource path="res://Lizafos/state_move.gd" type="Script" id=12]
+[ext_resource path="res://Scripts/hit_box.gd" type="Script" id=13]
+[ext_resource path="res://Lizafos/state_hurt.gd" type="Script" id=14]
+[ext_resource path="res://Lizafos/state_death.gd" type="Script" id=15]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id=2]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 140.0
+
+[sub_resource type="Animation" id=5]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 133, 195, 22, 33 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 54, 50, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 54 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 239, 0, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 54 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 20, 98, 26, 33 ), Rect2( 93, 161, 25, 32 ), Rect2( 160, 106, 26, 32 ), Rect2( 186, 131, 25, 33 ), Rect2( 0, 164, 23, 34 ), Rect2( 21, 200, 21, 32 ), Rect2( 88, 193, 23, 32 ), Rect2( 199, 98, 26, 33 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 50, 48, 128, 128 ), Rect2( 51, 49, 128, 128 ), Rect2( 50, 49, 128, 128 ), Rect2( 50, 48, 128, 128 ), Rect2( 51, 48, 128, 128 ), Rect2( 54, 50, 128, 128 ), Rect2( 53, 50, 128, 128 ), Rect2( 51, 48, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 17 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 18 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 19 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 20 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 21 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 22 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 23 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 24 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 17 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 18 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 19 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 20 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 21 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 22 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 23 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 24 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 183, 164, 24, 32 ), Rect2( 65, 209, 20, 32 ), Rect2( 111, 194, 22, 33 ), Rect2( 118, 161, 24, 33 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 52, 49, 128, 128 ), Rect2( 54, 49, 128, 128 ), Rect2( 53, 48, 128, 128 ), Rect2( 50, 48, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 33 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 34 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 35 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 36 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 239, 0, 1, 1 ), Rect2( 8, 105, 8, 15 ), Rect2( 0, 58, 20, 47 ), Rect2( 124, 95, 18, 49 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ), Rect2( 57, 35, 128, 128 ), Rect2( 57, 30, 128, 128 ), Rect2( 58, 29, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 33 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 34 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 35 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 36 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 46, 171, 19, 39 ), Rect2( 73, 137, 20, 40 ), Rect2( 177, 64, 22, 42 ), Rect2( 74, 66, 24, 37 ), Rect2( 142, 161, 23, 34 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 53, 50, 128, 128 ), Rect2( 52, 48, 128, 128 ), Rect2( 52, 43, 128, 128 ), Rect2( 52, 44, 128, 128 ), Rect2( 51, 47, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 47 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 48 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 49 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 50 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 51 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 231, 0, 8, 32 ), Rect2( 225, 98, 8, 31 ), Rect2( 98, 66, 8, 25 ), Rect2( 106, 66, 8, 20 ), Rect2( 0, 105, 8, 19 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 59, 18, 128, 128 ), Rect2( 59, 17, 128, 128 ), Rect2( 55, 18, 128, 128 ), Rect2( 55, 24, 128, 128 ), Rect2( 56, 28, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 47 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 48 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 49 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 50 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 51 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 71, 103, 25, 34 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 52, 48, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 239, 0, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=10]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 47, 66, 27, 33 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 50, 48, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 52 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 239, 0, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 52 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=11]
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 49, 137, 24, 34 ), Rect2( 211, 131, 25, 33 ), Rect2( 20, 65, 27, 33 ), Rect2( 199, 64, 27, 34 ), Rect2( 46, 99, 25, 34 ), Rect2( 23, 167, 23, 33 ), Rect2( 183, 196, 21, 33 ), Rect2( 204, 197, 20, 34 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 52, 47, 128, 128 ), Rect2( 51, 48, 128, 128 ), Rect2( 50, 48, 128, 128 ), Rect2( 50, 47, 128, 128 ), Rect2( 51, 47, 128, 128 ), Rect2( 52, 48, 128, 128 ), Rect2( 53, 48, 128, 128 ), Rect2( 54, 47, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 1 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 2 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 3 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 4 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 5 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 6 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 7 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 8 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 1 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 2 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 3 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 4 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 5 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 6 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 7 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 8 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 65, 177, 23, 32 ), Rect2( 207, 164, 23, 33 ), Rect2( 25, 133, 24, 34 ), Rect2( 98, 95, 26, 34 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 53, 49, 128, 128 ), Rect2( 54, 48, 128, 128 ), Rect2( 53, 47, 128, 128 ), Rect2( 51, 47, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 25 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 26 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 27 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 28 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 239, 0, 1, 1 ), Rect2( 226, 64, 10, 34 ), Rect2( 118, 33, 11, 31 ), Rect2( 118, 33, 11, 31 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ), Rect2( 62, 80, 128, 128 ), Rect2( 63, 80, 128, 128 ), Rect2( 62, 79, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 25 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 26 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 27 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 28 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=13]
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 142, 96, 18, 48 ), Rect2( 165, 161, 18, 43 ), Rect2( 155, 204, 20, 32 ), Rect2( 0, 198, 21, 32 ), Rect2( 0, 131, 25, 33 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 55, 42, 128, 128 ), Rect2( 55, 48, 128, 128 ), Rect2( 53, 54, 128, 128 ), Rect2( 53, 49, 128, 128 ), Rect2( 51, 48, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 37 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 38 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 39 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 40 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 41 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 175, 204, 8, 36 ), Rect2( 175, 204, 8, 36 ), Rect2( 224, 198, 9, 34 ), Rect2( 230, 164, 10, 34 ), Rect2( 226, 32, 11, 32 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 60, 90, 128, 128 ), Rect2( 60, 91, 128, 128 ), Rect2( 59, 86, 128, 128 ), Rect2( 61, 80, 128, 128 ), Rect2( 62, 79, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 37 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 38 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 39 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 40 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 41 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=14]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 136, 0, 33, 31 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 45, 49, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 53 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 239, 0, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 53 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=15]
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 25, 30, 33 ), Rect2( 166, 32, 30, 32 ), Rect2( 148, 64, 29, 32 ), Rect2( 60, 33, 29, 33 ), Rect2( 136, 31, 30, 33 ), Rect2( 196, 32, 30, 32 ), Rect2( 169, 0, 31, 32 ), Rect2( 105, 0, 31, 33 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 49, 48, 128, 128 ), Rect2( 48, 49, 128, 128 ), Rect2( 48, 49, 128, 128 ), Rect2( 48, 48, 128, 128 ), Rect2( 48, 48, 128, 128 ), Rect2( 49, 49, 128, 128 ), Rect2( 49, 49, 128, 128 ), Rect2( 49, 48, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 9 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 10 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 11 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 12 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 13 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 14 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 15 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 16 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ), Rect2( 239, 0, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ), Rect2( 0, 0, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 9 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 10 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 11 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 12 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 13 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 14 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 15 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 16 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=16]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 200, 0, 31, 32 ), Rect2( 42, 0, 32, 32 ), Rect2( 74, 0, 31, 33 ), Rect2( 30, 32, 30, 33 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 48, 49, 128, 128 ), Rect2( 48, 49, 128, 128 ), Rect2( 48, 48, 128, 128 ), Rect2( 48, 48, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 29 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 30 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 31 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 32 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 239, 0, 1, 1 ), Rect2( 183, 231, 33, 8 ), Rect2( 85, 227, 33, 10 ), Rect2( 85, 227, 33, 10 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ), Rect2( 74, 66, 128, 128 ), Rect2( 74, 62, 128, 128 ), Rect2( 73, 61, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 29 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 30 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 31 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 32 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=17]
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("layer_body:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 122, 144, 48, 17 ), Rect2( 0, 0, 42, 25 ), Rect2( 118, 64, 30, 31 ), Rect2( 96, 129, 26, 32 ), Rect2( 89, 33, 29, 33 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("layer_body:texture:margin")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 43, 61, 128, 128 ), Rect2( 46, 55, 128, 128 ), Rect2( 50, 51, 128, 128 ), Rect2( 52, 49, 128, 128 ), Rect2( 50, 48, 128, 128 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("AsePlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 42 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 43 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 44 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 45 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 46 ],
+"method": "on_frame_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("layer_weapon:texture:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 85, 237, 30, 8 ), Rect2( 0, 232, 33, 8 ), Rect2( 33, 232, 32, 8 ), Rect2( 118, 228, 33, 10 ), Rect2( 85, 227, 33, 10 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("layer_weapon:texture:margin")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 89, 71, 128, 128 ), Rect2( 88, 70, 128, 128 ), Rect2( 80, 64, 128, 128 ), Rect2( 76, 61, 128, 128 ), Rect2( 74, 61, 128, 128 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("AsePlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 42 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 43 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 44 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 45 ],
+"method": "on_frame_changed"
+}, {
+"args": [ 46 ],
+"method": "on_frame_changed"
+} ]
+}
+
+[sub_resource type="AtlasTexture" id=18]
+resource_local_to_scene = true
+atlas = ExtResource( 2 )
+region = Rect2( 165, 161, 18, 43 )
+margin = Rect2( 55, 48, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=19]
+resource_local_to_scene = true
+atlas = ExtResource( 2 )
+region = Rect2( 175, 204, 8, 36 )
+margin = Rect2( 60, 91, 128, 128 )
+
+[node name="Lizafos" type="KinematicBody2D"]
+collision_layer = 32
+collision_mask = 3
+script = ExtResource( 1 )
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource( 8 )
+max_hp = 2
+
+[node name="FSM" type="Node" parent="."]
+script = ExtResource( 6 )
+initial_state_node = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="FSM"]
+script = ExtResource( 9 )
+
+[node name="Grab" type="Node" parent="FSM"]
+script = ExtResource( 11 )
+
+[node name="Move" type="Node" parent="FSM"]
+script = ExtResource( 12 )
+
+[node name="Hurt" type="Node" parent="FSM"]
+script = ExtResource( 14 )
+
+[node name="Death" type="Node" parent="FSM"]
+script = ExtResource( 15 )
+
+[node name="FootCollision" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource( 2 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2( 0, -10 )
+shape = SubResource( 3 )
+
+[node name="TargetDetection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
+script = ExtResource( 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TargetDetection"]
+shape = SubResource( 4 )
+
+[node name="AsePlayer" type="AnimationPlayer" parent="."]
+anims/back_hurt = SubResource( 5 )
+anims/back_idle = SubResource( 6 )
+anims/back_spear_grab = SubResource( 7 )
+anims/back_spear_move = SubResource( 8 )
+anims/crowd = SubResource( 9 )
+anims/front_hurt = SubResource( 10 )
+anims/front_idle = SubResource( 11 )
+anims/front_spear_grab = SubResource( 12 )
+anims/front_spear_move = SubResource( 13 )
+anims/side_hurt = SubResource( 14 )
+anims/side_idle = SubResource( 15 )
+anims/side_spear_grab = SubResource( 16 )
+anims/side_spear_move = SubResource( 17 )
+script = ExtResource( 3 )
+config = "res://Assets/Animations/lizafos.json"
+offset = Vector2( -64, -78 )
+layers = [ NodePath("../layer_body"), NodePath("../layer_weapon") ]
+
+[node name="layer_shadow" type="Node2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="layer_body" type="Sprite" parent="."]
+material = ExtResource( 4 )
+texture = SubResource( 18 )
+centered = false
+offset = Vector2( -64, -78 )
+
+[node name="layer_weapon" type="Sprite" parent="."]
+material = ExtResource( 4 )
+texture = SubResource( 19 )
+centered = false
+offset = Vector2( -64, -78 )
+
+[connection signal="hit" from="HitBox" to="." method="_on_hit"]
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt"]

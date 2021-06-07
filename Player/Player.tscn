@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Player/player.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/fsm.gd" type="Script" id=2]
@@ -8,8 +8,10 @@
 [ext_resource path="res://Player/state_attacking.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/hurt_box.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/stats.gd" type="Script" id=8]
-[ext_resource path="res://Shaders/m_dropshadow_animated.tres" type="Material" id=9]
+[ext_resource path="res://addons/aseplayer/default_material.tres" type="Material" id=9]
 [ext_resource path="res://Scripts/drop_shadow.gd" type="Script" id=10]
+[ext_resource path="res://Player/state_hurting.gd" type="Script" id=11]
+[ext_resource path="res://Player/state_dying.gd" type="Script" id=12]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
@@ -2124,8 +2126,8 @@ tracks/8/keys = {
 
 [sub_resource type="AtlasTexture" id=17]
 atlas = ExtResource( 5 )
-region = Rect2( 185, 97, 24, 33 )
-margin = Rect2( 52, 48, 128, 128 )
+region = Rect2( 224, 163, 23, 33 )
+margin = Rect2( 52, 49, 128, 128 )
 
 [sub_resource type="AtlasTexture" id=18]
 atlas = ExtResource( 5 )
@@ -2156,6 +2158,7 @@ collision_mask = 6
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2( 0, 20 )
 shape = SubResource( 2 )
+disabled = true
 
 [node name="HurtBox" type="Area2D" parent="."]
 position = Vector2( 0, -10 )
@@ -2178,6 +2181,12 @@ idle_animation_speed = 0.5
 script = ExtResource( 6 )
 attack_animation_speed = 1.75
 friction = 200
+
+[node name="Hurting" type="Node" parent="FSM"]
+script = ExtResource( 11 )
+
+[node name="Dying" type="Node" parent="FSM"]
+script = ExtResource( 12 )
 
 [node name="AsePlayer" type="AnimationPlayer" parent="."]
 anims/back_attack_dagger = SubResource( 4 )
@@ -2208,11 +2217,13 @@ centered = false
 offset = Vector2( -64, -76 )
 
 [node name="layer_weapon" type="Sprite" parent="."]
+material = ExtResource( 9 )
 texture = SubResource( 18 )
 centered = false
 offset = Vector2( -64, -76 )
 
 [node name="layer_fx" type="Sprite" parent="."]
+material = ExtResource( 9 )
 texture = SubResource( 19 )
 centered = false
 offset = Vector2( -64, -76 )

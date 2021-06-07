@@ -90,6 +90,7 @@ func _input(event: InputEvent) -> void:
 
 			is_touch_started = false
 			touch_duration = 0
+			hide()
 			_reset()
 
 	elif event is InputEventScreenDrag and _touch_index == event.index:
@@ -164,7 +165,6 @@ func _update_joystick(event_position: Vector2):
 		if joystick_mode == JoystickMode.FOLLOWING:
 			_following(vector)
 	else:
-		hide()
 		is_working = false
 		output = Vector2.ZERO
 		_reset_handle()

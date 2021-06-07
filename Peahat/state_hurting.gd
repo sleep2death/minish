@@ -1,7 +1,6 @@
 extends FSMState
 
-var hit_burst := preload("res://Vfx/HitBurst.tscn")
-var enemy_death := preload("res://Vfx/GlobalEnemyDeath.tscn")
+var hit_burst := preload("res://VFx/HitBurst.tscn")
 
 onready var entity := get_node("../..") as Peahat
 

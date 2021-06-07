@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/camera_pivot.gd" type="Script" id=1]
 [ext_resource path="res://Joystick/Joystick.tscn" type="PackedScene" id=2]
@@ -9,10 +9,41 @@
 [ext_resource path="res://Scripts/interacive_tilemap.gd" type="Script" id=7]
 [ext_resource path="res://Shaders/m_dropshadow_static.tres" type="Material" id=8]
 [ext_resource path="res://Peahat/Peahat.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scripts/Filters.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/ui_controller.gd" type="Script" id=11]
+[ext_resource path="res://Scripts/ui_hearts.gd" type="Script" id=12]
+[ext_resource path="res://Lizafos/Lizafos.tscn" type="PackedScene" id=13]
 
-[sub_resource type="OpenSimplexNoise" id=2]
+[sub_resource type="OpenSimplexNoise" id=1]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform float brightness = 1.0;
+uniform float grey_offset = 0.;
+
+void fragment() {
+    vec3 c = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0).rgb;
+	
+	float avg = (c.r + c.g + c.b) / 3.0;
+	avg *= brightness;
+	
+    c.r = mix(c.r, avg, grey_offset);
+	c.g = mix(c.g, avg, grey_offset);
+	c.b = mix(c.b, avg, grey_offset);
+
+    COLOR.rgb = c.rgb;
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/brightness = 1.0
+shader_param/grey_offset = 0.0
+
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 3 )
 
 [node name="Game" type="Node2D"]
@@ -23,7 +54,7 @@ __meta__ = {
 "_gizmo_extents_": 0.1
 }
 camera_node = NodePath("../Position2D/Camera")
-noise = SubResource( 2 )
+noise = SubResource( 1 )
 
 [node name="Camera" type="Camera2D" parent="VCam"]
 current = true
@@ -44,7 +75,7 @@ cell_y_sort = true
 collision_layer = 3
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 65540, 0, 0, 131075, 1, 0, 131077, 1, 0, 196612, 1, 0 )
+tile_data = PoolIntArray( 65538, 0, 0, 65540, 0, 0, 65542, 0, 0, 131075, 1, 0, 131077, 1, 0, 196612, 1, 0 )
 script = ExtResource( 7 )
 
 [node name="Player" parent="World" groups=[
@@ -58,35 +89,76 @@ joystick_node = NodePath("../../CanvasLayer/UI/Joystick")
 [node name="Peahat" parent="World" instance=ExtResource( 9 )]
 position = Vector2( -49.2789, 47.2185 )
 
+[node name="Peahat2" parent="World" instance=ExtResource( 9 )]
+position = Vector2( 65.6619, 170.261 )
+
+[node name="Lizafos" parent="World" groups=[
+"camera_shaker",
+"frame_freezer",
+] instance=ExtResource( 13 )]
+position = Vector2( 122.859, -27.6263 )
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="UI" type="Control" parent="CanvasLayer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="BackBufferCopy" type="BackBufferCopy" parent="CanvasLayer"]
+copy_mode = 2
+rect = Rect2( 0, 0, 360, 640 )
+script = ExtResource( 10 )
+
+[node name="Tween" type="Tween" parent="CanvasLayer/BackBufferCopy"]
+
+[node name="ColorFilter" type="ColorRect" parent="CanvasLayer/BackBufferCopy"]
+material = SubResource( 3 )
+margin_right = 360.0
+margin_bottom = 640.0
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
+[node name="UI" type="MarginContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 12
+custom_constants/margin_top = 6
+custom_constants/margin_left = 6
+custom_constants/margin_bottom = 12
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
+
 [node name="Header" type="HBoxContainer" parent="CanvasLayer/UI"]
-margin_right = 360.0
-margin_bottom = 32.0
+margin_left = 6.0
+margin_top = 6.0
+margin_right = 348.0
+margin_bottom = 38.0
+size_flags_vertical = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Hearts" type="HBoxContainer" parent="CanvasLayer/UI/Header"]
-margin_right = 296.0
+margin_right = 278.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 2
+script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+player_node = NodePath("../../../../World/Player")
+
+[node name="Label" type="Label" parent="CanvasLayer/UI/Header/Hearts"]
+margin_top = 9.0
+margin_right = 16.0
+margin_bottom = 22.0
+custom_fonts/font = SubResource( 4 )
+text = "Dead"
 
 [node name="PerformanceMonitor" type="MarginContainer" parent="CanvasLayer/UI/Header"]
-margin_left = 300.0
-margin_right = 360.0
+margin_left = 282.0
+margin_right = 342.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 60, 32 )
 custom_constants/margin_right = 4
@@ -97,8 +169,9 @@ script = ExtResource( 4 )
 margin_top = 4.0
 margin_right = 56.0
 margin_bottom = 32.0
-size_flags_vertical = 1
-custom_fonts/font = SubResource( 1 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 5 )
 text = "monitor info"
 align = 2
 valign = 1
@@ -107,10 +180,18 @@ __meta__ = {
 }
 
 [node name="Joystick" parent="CanvasLayer/UI" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 6.0
+margin_top = 6.0
+margin_right = 348.0
+margin_bottom = 628.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_pivot_offset = Vector2( 180, 128 )
 joystick_mode = 1
 dead_zone = 0.2
 
+[connection signal="player_death" from="World/Player" to="CanvasLayer/BackBufferCopy" method="_on_player_death"]
 [connection signal="joystick_clicked" from="CanvasLayer/UI/Joystick" to="World/Player" method="on_joystick_clicked"]
+[connection signal="joystick_clicked" from="CanvasLayer/UI/Joystick" to="CanvasLayer/UI" method="_on_joystick_clicked"]

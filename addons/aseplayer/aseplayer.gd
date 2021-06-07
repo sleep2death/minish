@@ -15,8 +15,9 @@ func _ready():
 		var node := get_node(p) as Sprite
 		layer_nodes.append(node)
 
-func on_frame_changed(_idx):
-	pass
+var current_frame:int = 0
+func on_frame_changed(idx):
+	current_frame = idx
 
 func get_current_direction() -> String:
 	var anim := current_animation

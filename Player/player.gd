@@ -30,22 +30,44 @@ onready var fsm := $FSM as FSM
 
 onready var ase := $AsePlayer as AsePlayer
 
+var invincilbe_time: float = 0
+
+var is_dead: bool = false setget set_is_dead
+signal player_death(player)
+
+func set_is_dead(value: bool):
+	is_dead = value
+	emit_signal("player_death", self)
+
 func _ready():
 	detection_shape.radius = detection_range
 	query.collide_with_areas = true
+	
+	if not hurt_box.connect("hurt", self, "on_hurt") == OK:
+		push_error("can not connect to hurtbox")
+		
+func _physics_process(delta):
+	if invincilbe_time > 0:
+		var m := $layer_body.material as ShaderMaterial
+		m.set_shader_param("white_progress", sin(invincilbe_time * 32) * 0.325 + 0.25)
+		invincilbe_time -= delta
+	else:
+		var m := $layer_body.material as ShaderMaterial
+		m.set_shader_param("white_progress", 0)
 
 func hit_interactives() -> bool:
 	query.set_shape(hit_shape.shape)
 	query.transform = hit_shape.global_transform
 	query.collision_layer = hit_box.collision_mask
-
+	var is_hurtbox := false
 	var res = physics.intersect_shape(query)
 	for col in res:
 		if col.collider is InteractiveTileMap:
 			col.collider.on_hit(col.metadata, stats)
 		elif col.collider is HurtBox:
 			col.collider.on_hit(stats)
-	return res.size() > 0
+			is_hurtbox = true
+	return is_hurtbox
 
 func get_interactives() -> Array:
 	query.set_shape(detection_shape)
@@ -83,8 +105,13 @@ func shake_camera(trauma: float):
 
 signal req_frame_freeze(duration)
 
-func freeze_frame(duration: int):
+func freeze_frame(duration: float):
 	emit_signal("req_frame_freeze", duration)
+
+func on_hurt(from: Stats):
+	# protect player getting hurt, when invincible
+	if not invincilbe_time > 0:
+		fsm.on_global_event("on_hurt", from)
 
 func on_joystick_clicked(position):
 	fsm.on_global_event("joystick_clicked", position)

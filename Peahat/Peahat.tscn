@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Peahat/Peahat.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Animations/peahat.png" type="Texture" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Scripts/stats.gd" type="Script" id=12]
 [ext_resource path="res://Peahat/state_hurting.gd" type="Script" id=13]
 [ext_resource path="res://Peahat/state_dying.gd" type="Script" id=14]
+[ext_resource path="res://addons/aseplayer/default_material.tres" type="Material" id=15]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 6.0
@@ -209,9 +210,8 @@ tracks/2/keys = {
 }
 
 [sub_resource type="AtlasTexture" id=8]
+resource_local_to_scene = true
 atlas = ExtResource( 2 )
-region = Rect2( 20, 62, 20, 24 )
-margin = Rect2( 54, 64, 128, 128 )
 
 [sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 11 )
@@ -234,6 +234,7 @@ atlas = ExtResource( 11 )
 region = Rect2( 144, 0, 36, 51 )
 
 [sub_resource type="SpriteFrames" id=14]
+resource_local_to_scene = true
 animations = [ {
 "frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
 "loop": true,
@@ -316,6 +317,7 @@ layers = [ NodePath("../layer_body") ]
 script = ExtResource( 8 )
 
 [node name="layer_body" type="Sprite" parent="."]
+material = ExtResource( 15 )
 texture = SubResource( 8 )
 centered = false
 offset = Vector2( -64, -80 )
@@ -323,6 +325,5 @@ offset = Vector2( -64, -80 )
 [node name="animated_top" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 14 )
-frame = 1
 playing = true
 offset = Vector2( 0, -20 )

@@ -27,11 +27,22 @@ func _ready():
 	for r in get_tree().get_nodes_in_group("frame_freezer"):
 		r.connect("req_frame_freeze", self, "freeze_frame")
 
+var is_shaking_locked: bool = false
 func add_trauma(trauma_in: float):
-	trauma = clamp(trauma + trauma_in, 0, 1)
+	if is_shaking_locked == false:
+		is_shaking_locked = true
+		trauma = clamp(trauma + trauma_in, 0, 1)
 
-func freeze_frame(duration: int):
-	OS.delay_msec(duration)
+var is_frame_freezing: bool = false
+
+func freeze_frame(duration: float):
+	if not is_frame_freezing:
+		get_tree().paused = true
+		is_frame_freezing = true
+		
+		yield(get_tree().create_timer(duration), 'timeout')
+		get_tree().paused = false
+		is_frame_freezing = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -43,5 +54,8 @@ func _process(delta):
 	global_position.y = player.global_position.y + noise.get_noise_3d(0, time * time_scale, 0) * max_y * shake
 	rotation_degrees = noise.get_noise_3d(0, 0, time * time_scale) * max_r * shake
 		
-	if trauma > 0: trauma = clamp(trauma - (delta * decay), 0, 1)
+	if trauma > 0: 
+		trauma = clamp(trauma - (delta * decay), 0, 1)
+	else:
+		is_shaking_locked = false
 

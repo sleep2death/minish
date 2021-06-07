@@ -45,6 +45,16 @@ _global_script_classes=[ {
 "path": "res://Scripts/fsm_state.gd"
 }, {
 "base": "Area2D",
+"class": "HitBox",
+"language": "GDScript",
+"path": "res://Scripts/hit_box.gd"
+}, {
+"base": "TextureRect",
+"class": "HudHearts",
+"language": "GDScript",
+"path": "res://Scripts/ui_heart.gd"
+}, {
+"base": "Area2D",
 "class": "HurtBox",
 "language": "GDScript",
 "path": "res://Scripts/hurt_box.gd"
@@ -58,6 +68,11 @@ _global_script_classes=[ {
 "class": "Joystick",
 "language": "GDScript",
 "path": "res://Joystick/Joystick.gd"
+}, {
+"base": "Agent",
+"class": "Lizafos",
+"language": "GDScript",
+"path": "res://Lizafos/Lizafos.gd"
 }, {
 "base": "Agent",
 "class": "Peahat",
@@ -97,9 +112,12 @@ _global_script_class_icons={
 "EntityStateBase": "",
 "FSM": "",
 "FSMState": "",
+"HitBox": "",
+"HudHearts": "",
 "HurtBox": "",
 "InteractiveTileMap": "",
 "Joystick": "",
+"Lizafos": "",
 "Peahat": "",
 "Player": "",
 "Stats": "",
@@ -152,6 +170,8 @@ pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
+quality/intended_usage/framebuffer_allocation=0
+quality/intended_usage/framebuffer_allocation.mobile=0
 2d/snapping/use_gpu_pixel_snap=true
 environment/default_environment="res://default_env.tres"
 quality/dynamic_fonts/use_oversampling=false
