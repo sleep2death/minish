@@ -212,6 +212,8 @@ tracks/2/keys = {
 [sub_resource type="AtlasTexture" id=8]
 resource_local_to_scene = true
 atlas = ExtResource( 2 )
+region = Rect2( 40, 62, 21, 22 )
+margin = Rect2( 54, 66, 128, 128 )
 
 [sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 11 )
@@ -325,5 +327,6 @@ offset = Vector2( -64, -80 )
 [node name="animated_top" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 14 )
+frame = 1
 playing = true
 offset = Vector2( 0, -20 )

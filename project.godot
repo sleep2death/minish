@@ -103,6 +103,16 @@ _global_script_classes=[ {
 "class": "VisualCamera",
 "language": "GDScript",
 "path": "res://Scripts/camera_pivot.gd"
+}, {
+"base": "Position2D",
+"class": "WaterDetecion",
+"language": "GDScript",
+"path": "res://Scripts/water_detection.gd"
+}, {
+"base": "Node2D",
+"class": "WaterReflection",
+"language": "GDScript",
+"path": "res://Scripts/water_reflection.gd"
 } ]
 _global_script_class_icons={
 "Agent": "",
@@ -123,7 +133,9 @@ _global_script_class_icons={
 "Stats": "",
 "TargetDetection": "",
 "Utils": "",
-"VisualCamera": ""
+"VisualCamera": "",
+"WaterDetecion": "",
+"WaterReflection": ""
 }
 
 [application]

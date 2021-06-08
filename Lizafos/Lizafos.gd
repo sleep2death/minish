@@ -18,10 +18,11 @@ var velocity := Vector2.ZERO
 export (String, "front", "back", "left", "right") var direction_name = "front"
 
 func _on_hit(s):
-	shake_camera(0.3)
-	freeze_frame(0.01)
+	if s is Player and s.invincible_time <= 0:
+		shake_camera(0.3)
+		freeze_frame(0.01)
 	
-	fsm.on_global_event("on_hit", s)
+		fsm.on_global_event("on_hit", s)
 
 func _on_hurt(s):
 	fsm.on_global_event("on_hurt", s)
