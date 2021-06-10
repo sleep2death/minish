@@ -4,8 +4,8 @@ class_name VisualCamera
 export (NodePath) var player_node = "../World/Player"
 onready var player := get_node(player_node) as Player
 
-export (NodePath) var camera_node = "./Camera"
-onready var camera := $Camera
+export (NodePath) var camera_node = "../Camera"
+onready var camera := get_node(camera_node) as Camera2D
 
 export (OpenSimplexNoise) var noise
 export(float, 0, 1) var trauma = 0.0
@@ -58,4 +58,7 @@ func _process(delta):
 		trauma = clamp(trauma - (delta * decay), 0, 1)
 	else:
 		is_shaking_locked = false
+		
+	camera.global_position.x = round(global_position.x)
+	camera.global_position.y = round(global_position.y)
 

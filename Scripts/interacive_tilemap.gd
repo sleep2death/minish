@@ -13,6 +13,8 @@ func on_hit(pos: Vector2, _stats: Stats):
 			hit_bush(pos, gp, bush_particles)
 		"lostwoods_bush":
 			hit_bush(pos, gp, lostwoods_bush_particles)
+		"lostwoods_bush_tall":
+			hit_bush(pos, gp, lostwoods_bush_particles)
 
 func hit_bush(map_pos, global_pos, par):
 	var p = par.instance()

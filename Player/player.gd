@@ -79,6 +79,7 @@ func get_interactives() -> Array:
 func get_nearest_interactive_pos(targets: Array) -> Vector2:
 	var nearest = INF
 	var nearest_pos = Vector2.ZERO
+	var nearest_target = null
 
 	for t in targets:
 		if t.collider is TileMap:
@@ -87,12 +88,13 @@ func get_nearest_interactive_pos(targets: Array) -> Vector2:
 			var gp = tm.to_global(lp)
 			# prints("global_pos", gp, "local_pos", lp)
 			var dist := global_position.distance_squared_to(gp)
-			if dist < nearest:
+			if dist < nearest and (nearest_target is TileMap or nearest_target == null):
 				nearest = dist
 				nearest_pos = gp
+				nearest_target = tm
 		elif t.collider.owner is KinematicBody2D:
 			var dist := global_position.distance_squared_to(t.collider.global_position)
-			if dist < nearest:
+			if dist < nearest or (nearest_target is TileMap):
 				nearest = dist
 				nearest_pos = t.collider.global_position
 	# prints("nearest", nearest_pos)

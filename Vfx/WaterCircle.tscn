@@ -33,4 +33,5 @@ animations = [ {
 [node name="water_circle" type="AnimatedSprite"]
 position = Vector2( 0, -1 )
 frames = SubResource( 6 )
+frame = 2
 playing = true
